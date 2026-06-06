@@ -1,0 +1,37 @@
+{
+  "name": "lo-bot",
+  "version": "0.1.0",
+  "description": "Local AI Assistant - Fully offline voice-enabled bot",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "lo-bot": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "lint": "biome check src/",
+    "format": "biome format src/ --write",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ink": "^4.4.1",
+    "node-llama-cpp": "^3.18.1",
+    "react": "^18.2.0",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.45",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
