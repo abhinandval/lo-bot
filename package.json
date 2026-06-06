@@ -20,6 +20,7 @@
   "dependencies": {
     "ink": "^4.4.1",
     "node-llama-cpp": "^3.18.1",
+    "playwright": "^1.60.0",
     "react": "^18.2.0",
     "yaml": "^2.3.4"
   },
