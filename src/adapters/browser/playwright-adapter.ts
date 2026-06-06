@@ -81,8 +81,10 @@ export class PlaywrightBrowserAdapter implements IToolAdapter {
     }
   ];
 
-  private browser: Awaited<ReturnType<typeof import('playwright')['chromium']['launch']>> | null = null;
-  private page: Awaited<ReturnType<Awaited<ReturnType<typeof import('playwright')['chromium']>>['newPage']>> | null = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private browser: any = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private page: any = null;
   private config: PlaywrightConfig = { headless: true };
 
   async init(config?: PlaywrightConfig): Promise<void> {
@@ -167,9 +169,11 @@ export class PlaywrightBrowserAdapter implements IToolAdapter {
 
         case 'browser_read': {
           const text = await this.page.evaluate(() => {
-            const article = document.querySelector('article, main, [role="main"]');
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const doc = document as any;
+            const article = doc.querySelector('article, main, [role="main"]');
             if (article) return article.textContent;
-            return document.body?.textContent?.slice(0, 5000);
+            return doc.body?.textContent?.slice(0, 5000);
           });
           return { success: true, data: { text } };
         }

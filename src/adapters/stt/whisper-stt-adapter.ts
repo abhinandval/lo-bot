@@ -168,7 +168,7 @@ export class WhisperSTTAdapter implements ISTTAdapter {
     if (!this.config) throw new Error('Not initialized');
 
     const formData = new FormData();
-    formData.append('file', new Blob([audioBuffer]), 'audio.wav');
+    formData.append('file', new Blob([new Uint8Array(audioBuffer)]), 'audio.wav');
     formData.append('model', this.config.model ?? 'whisper-1');
     if (this.config.language) {
       formData.append('language', this.config.language);

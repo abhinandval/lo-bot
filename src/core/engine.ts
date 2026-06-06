@@ -107,7 +107,7 @@ export class LoBotEngine {
     }
 
     const messages: Message[] = [
-      { role: 'system', content: this.getSystemPrompt() },
+      { role: 'system', content: await this.getSystemPrompt() },
       ...history,
       { role: 'user', content: message }
     ];
@@ -154,8 +154,8 @@ export class LoBotEngine {
     return this.tracker.getCapabilities();
   }
 
-  private getSystemPrompt(): string {
-    const caps = this.tracker.getCapabilities();
+  private async getSystemPrompt(): Promise<string> {
+    const caps = await this.tracker.getCapabilities();
     const tools: string[] = [];
 
     if (caps.browser?.available) tools.push('browser');

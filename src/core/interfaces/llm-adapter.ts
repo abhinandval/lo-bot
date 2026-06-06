@@ -1,4 +1,5 @@
-import type { IBaseAdapter, Message, ChatChunk } from '../types.js';
+import type { Message, ChatChunk } from '../types.js';
+import type { IBaseAdapter } from './base-adapter.js';
 
 /**
  * Context information from LLM adapter

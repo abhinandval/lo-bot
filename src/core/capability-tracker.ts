@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events';
-import type { IBaseAdapter, HealthStatus, CapabilityInfo, CapabilityMap } from './types.js';
+import type { HealthStatus, CapabilityInfo, CapabilityMap } from './types.js';
+import type { IBaseAdapter } from './interfaces/base-adapter.js';
 
 export type CapabilityTier = 'critical' | 'core' | 'voice' | 'optional';
 

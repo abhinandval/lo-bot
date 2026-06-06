@@ -1,5 +1,5 @@
 import type { ILLMAdapter } from './interfaces/llm-adapter.js';
-import type { ISTTAdapter, ITTSAdapter, TranscriptionEvent, VoiceState } from './interfaces/voice-adapters.js';
+import type { ISTTAdapter, ITTSAdapter, TranscriptionEvent } from './interfaces/voice-adapters.js';
 import type { CapabilityTracker } from './capability-tracker.js';
 import type { Message, ChatChunk } from './types.js';
 
@@ -131,10 +131,11 @@ export class VoiceLoop {
       buffer += chunk.content;
 
       // Extract complete sentences
-      let match;
+      let match: RegExpExecArray | null;
       while ((match = sentenceEnd.exec(buffer)) !== null) {
-        const sentence = buffer.slice(0, match.end);
-        buffer = buffer.slice(match.end);
+        const endIndex = match.index + match[0].length;
+        const sentence = buffer.slice(0, endIndex);
+        buffer = buffer.slice(endIndex);
 
         // Stream sentence to TTS immediately
         if (this.tts && !this.interrupted) {

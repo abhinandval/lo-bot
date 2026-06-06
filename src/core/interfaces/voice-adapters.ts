@@ -1,4 +1,8 @@
-import type { IBaseAdapter, Voice, TTSOptions, AudioChunk, Message, ChatChunk } from '../types.js';
+import type { Voice, TTSOptions, AudioChunk, Message, ChatChunk } from '../types.js';
+import type { IBaseAdapter } from './base-adapter.js';
+
+// Re-export for convenience
+export type VoiceState = 'idle' | 'listening' | 'processing' | 'speaking' | 'error';
 
 // ============================================================================
 // TTS Adapter Interface

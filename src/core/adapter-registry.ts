@@ -1,4 +1,5 @@
-import type { IBaseAdapter, HealthStatus } from './types.js';
+import type { HealthStatus, CapabilityMap } from './types.js';
+import type { IBaseAdapter } from './interfaces/base-adapter.js';
 import type { ILLMAdapter } from './interfaces/llm-adapter.js';
 import type { ITTSAdapter } from './interfaces/voice-adapters.js';
 import type { IToolAdapter } from './interfaces/tool-adapters.js';
