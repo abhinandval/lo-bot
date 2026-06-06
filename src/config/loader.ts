@@ -1,7 +1,17 @@
 import { readFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import { parse } from 'yaml';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import type { AppConfig } from './types.js';
+
+// Get project root (directory of this file -> src/config -> project root)
+const __filename = fileURLToPath(import.meta.url);
+const PROJECT_ROOT = dirname(dirname(dirname(__filename)));
+
+function getDefaultModelsStore(): string {
+  return `${PROJECT_ROOT}/.models`;
+}
 
 const DEFAULT_CONFIG: AppConfig = {
   llm: {
@@ -43,6 +53,9 @@ const DEFAULT_CONFIG: AppConfig = {
     image: 'alpine:latest',
     timeout: 30000,
     allowNetwork: false
+  },
+  paths: {
+    modelsStore: getDefaultModelsStore()
   }
 };
 
@@ -76,6 +89,33 @@ function mergeConfig(defaults: AppConfig, override: Partial<AppConfig>): AppConf
     stt: { ...defaults.stt, ...override.stt },
     browser: { ...defaults.browser, ...override.browser },
     search: { ...defaults.search, ...override.search },
-    sandbox: { ...defaults.sandbox, ...override.sandbox }
+    sandbox: { ...defaults.sandbox, ...override.sandbox },
+    paths: { ...defaults.paths, ...override.paths }
   };
+}
+
+/**
+ * Get the models store path.
+ * Priority: MODELS_STORE env var > config > default
+ */
+export function getModelsStorePath(config: AppConfig): string {
+  // Environment variable takes highest priority
+  if (process.env.MODELS_STORE) {
+    return resolvePath(process.env.MODELS_STORE);
+  }
+  // Then config value
+  if (config.paths?.modelsStore) {
+    return resolvePath(config.paths.modelsStore);
+  }
+  // Finally default
+  return getDefaultModelsStore();
+}
+
+/**
+ * Resolve a path, expanding ~ and environment variables
+ */
+export function resolvePath(path: string): string {
+  return path
+    .replace(/^~/, process.env.HOME ?? '~')
+    .replace(/\$\{MODELS_STORE\}|\$MODELS_STORE/g, process.env.MODELS_STORE ?? getDefaultModelsStore());
 }

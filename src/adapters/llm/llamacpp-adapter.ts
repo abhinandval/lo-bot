@@ -1,5 +1,6 @@
 import type { ILLMAdapter, ContextInfo } from '../../core/interfaces/llm-adapter.js';
 import type { HealthStatus, Message, ChatChunk } from '../../core/types.js';
+import { resolvePath } from '../../config/loader.js';
 
 export interface LlamaCppConfig {
   modelPath: string;
@@ -26,10 +27,10 @@ export class LlamaCppAdapter implements ILLMAdapter {
   private config?: LlamaCppConfig;
 
   async init(config: LlamaCppConfig): Promise<void> {
-    this.config = config;
-    // Note: Actual model loading would happen here in production
-    // For now, we initialize with config only
-    console.log(`[LlamaCppAdapter] Initialized with model: ${config.modelPath}`);
+    // Resolve path variables (e.g., $MODELS_STORE, ~)
+    const resolvedPath = resolvePath(config.modelPath);
+    this.config = { ...config, modelPath: resolvedPath };
+    console.log(`[LlamaCppAdapter] Initialized with model: ${resolvedPath}`);
   }
 
   async destroy(): Promise<void> {

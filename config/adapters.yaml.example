@@ -39,3 +39,9 @@ sandbox:
   image: alpine:latest
   timeout: 30000
   allowNetwork: false
+
+# Path configuration
+# MODELS_STORE env var overrides this setting
+paths:
+  modelsStore: ~/.lo-bot/models
+  # Or use env var in path: $MODELS_STORE/gemma4-8b.gguf

@@ -48,6 +48,10 @@ export interface SandboxConfig {
   allowNetwork: boolean;
 }
 
+export interface PathConfig {
+  modelsStore: string;
+}
+
 export interface AppConfig {
   llm: LLMConfig;
   tts: TTSConfig;
@@ -55,4 +59,5 @@ export interface AppConfig {
   browser: BrowserConfig;
   search: SearchConfig;
   sandbox: SandboxConfig;
+  paths: PathConfig;
 }
