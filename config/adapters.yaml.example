@@ -1,0 +1,41 @@
+# Lo-Bot Adapter Configuration
+# Copy this file to config/adapters.yaml and modify as needed
+
+llm:
+  adapter: llamacpp
+  modelPath: ~/.lo-bot/models/gemma4-8b.gguf
+  contextSize: 4096
+  gpuLayers: 35
+  temperature: 0.7
+  topP: 0.9
+  repeatPenalty: 1.1
+  seed: null
+
+tts:
+  adapter: kokoro
+  baseUrl: http://localhost:8880
+  defaultVoice: af_bella
+
+stt:
+  adapter: whisper
+  apiUrl: http://localhost:8000
+  vad:
+    silenceThreshold: -40
+    minSpeechDuration: 250
+    silenceTimeout: 1000
+    prefixPadding: 300
+    maxRecordingDuration: 60000
+
+browser:
+  adapter: playwright
+  headless: true
+
+search:
+  adapter: searxng
+  baseUrl: http://localhost:8080
+
+sandbox:
+  adapter: docker
+  image: alpine:latest
+  timeout: 30000
+  allowNetwork: false
